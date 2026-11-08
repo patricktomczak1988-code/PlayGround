@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ranch of the Last Dawn</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="game-shell">
+      <div class="topbar">
+        <div class="brand">Ranch of the Last Dawn</div>
+        <div id="statusText" class="status-text">Runde 1 — Dorf sichern</div>
+      </div>
+
+      <canvas id="gameCanvas" width="960" height="600"></canvas>
+      <div class="controls-hint">WASD bewegen · Maus zielen & halten · R nach Niederlage</div>
+
+      <div id="hud" class="hud">
+        <div class="hud-block">
+          <span class="label">Runde</span>
+          <span id="roundValue">1</span>
+        </div>
+        <div class="hud-block">
+          <span class="label">Gesundheit</span>
+          <span id="healthValue">100 / 100</span>
+        </div>
+        <div class="hud-block">
+          <span class="label">Gold</span>
+          <span id="goldValue">0</span>
+        </div>
+        <div class="hud-block">
+          <span class="label">Skillpunkte</span>
+          <span id="skillValue">0</span>
+        </div>
+      </div>
+
+      <div id="messageBox" class="message-box hidden"></div>
+
+      <div id="upgradePanel" class="upgrade-panel hidden">
+        <h2>Fähigkeiten verstärken</h2>
+        <div id="upgradeList" class="upgrade-list"></div>
+      </div>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>

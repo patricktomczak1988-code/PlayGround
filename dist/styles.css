@@ -1,0 +1,236 @@
+:root {
+  --bg: #180f0d;
+  --panel: rgba(14, 14, 16, 0.82);
+  --panel-strong: rgba(29, 18, 15, 0.9);
+  --gold: #f7d061;
+  --red: #e95858;
+  --green: #7ae78a;
+  --sky: #d7ae64;
+  --cowboy: #f3d8a5;
+  --wood: #8f5933;
+  --grass: #355935;
+  --path: #a37d49;
+  --shadow: rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #35251d 0%, #190d0c 55%, #0b0a09 100%);
+  color: #f5f0dd;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-shell {
+  position: relative;
+  width: min(96vw, 960px);
+  height: min(92vh, 700px);
+  border: 3px solid rgba(255, 220, 140, 0.24);
+  border-radius: 18px;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(13, 24, 18, 0.9), rgba(10, 16, 12, 0.95));
+}
+
+.topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: rgba(15, 16, 18, 0.7);
+  border-bottom: 1px solid rgba(255, 210, 110, 0.18);
+  z-index: 20;
+}
+
+.brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f1d58d;
+}
+
+.status-text {
+  font-size: 0.92rem;
+  color: #f6e7ba;
+}
+
+#gameCanvas {
+  position: absolute;
+  inset: 52px 0 0 0;
+  width: 100%;
+  height: calc(100% - 52px);
+  display: block;
+  background: linear-gradient(180deg, #486c3c, #2f4b2d 50%, #223825);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.controls-hint {
+  position: absolute;
+  top: 66px;
+  left: 14px;
+  z-index: 15;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 205, 99, 0.16);
+  border-radius: 9px;
+  background: rgba(17, 12, 10, 0.62);
+  color: #e8dfc7;
+  font-size: 0.76rem;
+  pointer-events: none;
+}
+
+.hud {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  display: flex;
+  gap: 10px;
+  z-index: 15;
+  flex-wrap: wrap;
+}
+
+.hud-block {
+  min-width: 120px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(17, 12, 10, 0.7);
+  border: 1px solid rgba(255, 205, 99, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #d9c598;
+}
+
+.message-box {
+  position: absolute;
+  left: 50%;
+  top: 110px;
+  transform: translateX(-50%);
+  min-width: 280px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(19, 16, 14, 0.84);
+  border: 1px solid rgba(255, 220, 120, 0.2);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  z-index: 25;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.upgrade-panel {
+  position: absolute;
+  inset: 46px 20px 20px;
+  z-index: 30;
+  overflow-y: auto;
+  border-radius: 18px;
+  background: rgba(14, 17, 16, 0.84);
+  border: 1px solid rgba(255, 212, 122, 0.22);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.38);
+  padding: 18px;
+}
+
+.upgrade-panel h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  text-shadow: 0 3px 0 rgba(0,0,0,0.2);
+  color: #f4d68f;
+}
+
+.upgrade-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.upgrade-card {
+  background: linear-gradient(180deg, rgba(54, 42, 34, 0.95), rgba(26, 20, 17, 0.95));
+  border: 1px solid rgba(255, 209, 115, 0.24);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 180px;
+}
+
+.upgrade-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #f5dc9c;
+}
+
+.upgrade-card p {
+  margin: 0;
+  line-height: 1.45;
+  color: #ebdec0;
+  font-size: 0.92rem;
+}
+
+.upgrade-card button {
+  margin-top: auto;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #d59c47, #b5782a);
+  color: #1e1209;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+
+.upgrade-card button:hover {
+  filter: brightness(1.08);
+}
+
+@media (max-width: 760px) {
+  .brand {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+  }
+
+  .status-text {
+    font-size: 0.75rem;
+  }
+
+  .hud {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .hud-block {
+    min-width: 96px;
+    flex: 1 1 100px;
+  }
+}
