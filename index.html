@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#171c18" />
+  <title>Dust &amp; Bones — Letzte Runde in Red Creek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Rye&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Dust and Bones"><span class="brand-star">✳</span><span>DUST <i>&amp;</i> BONES</span></a>
+      <div class="chapter"><span class="chapter-dot"></span> RED CREEK, NEW MEXICO <span class="chapter-slash">/</span> 1891</div>
+      <button class="sound-toggle" id="soundToggle" aria-label="Sound umschalten">♫ <span>TON AN</span></button>
+    </header>
+
+    <section class="game-layout">
+      <section class="battle-column">
+        <div class="battle-heading">
+          <div><div class="eyebrow">DIE LETZTE GRENZE</div><h1>Red Creek <span>muss halten.</span></h1></div>
+          <div class="round-card"><span>ÜBERLEBENSRUNDE</span><strong id="roundNumber">01</strong></div>
+        </div>
+        <div class="canvas-frame">
+          <canvas id="gameCanvas" aria-label="Taktisches Spielfeld von Red Creek"></canvas>
+          <div class="canvas-vignette"></div>
+          <div class="map-label map-label-top"><span class="map-pin">✦</span> RED CREEK — MAIN STREET</div>
+          <div class="map-coords">34° 02' N &nbsp; 106° 54' W</div>
+          <div class="canvas-toast" id="toast" aria-live="polite"></div>
+          <div class="intro-overlay" id="introOverlay">
+            <div class="intro-card">
+              <div class="intro-mark">✳</div><div class="eyebrow">EINE GRENZSTADT. EIN LETZTER ABEND.</div>
+              <h2>Wenn die Glocke<br>dreimal schlägt …</h2>
+              <p>… kommen die Toten. Halte mit Clay und seinen Schäferhunden Red Creek Nacht für Nacht. Jede überstandene Welle macht euch stärker.</p>
+              <button class="primary-button" id="startButton">SATTEL AUF <span>→</span></button>
+              <div class="intro-hint">RUNDENBASIERTE TAKTIK · KEIN ENTKOMMEN</div>
+            </div>
+          </div>
+          <div class="upgrade-overlay hidden" id="upgradeOverlay">
+            <div class="upgrade-panel">
+              <div class="eyebrow">DIE NACHT IST NOCH NICHT VORBEI</div><h2>Wähle deine <em>Verbesserung.</em></h2>
+              <p>Red Creek hält — für den Moment. Was nimmst du mit in die nächste Runde?</p>
+              <div class="upgrade-options" id="upgradeOptions"></div>
+            </div>
+          </div>
+          <div class="gameover-overlay hidden" id="gameoverOverlay">
+            <div class="intro-card gameover-card"><div class="eyebrow">DIE GLOCKE IST VERSTUMMT</div><h2 id="gameoverTitle">Red Creek ist gefallen.</h2><p id="gameoverText"></p><button class="primary-button" id="restartButton">NOCH EINMAL <span>↻</span></button></div>
+          </div>
+        </div>
+        <div class="battle-footer">
+          <div class="objective"><span class="objective-icon">◎</span><div><b>HALTE DIE STADT</b><span id="objectiveText">Räume die Untoten aus Red Creek.</span></div></div>
+          <div class="turn-actions"><span class="ap-label">AKTIONEN <b id="apCount">2</b></span><button class="end-turn-button" id="endTurnButton">RUNDE BEENDEN <span>↗</span></button></div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="squad-panel panel">
+          <div class="panel-title"><span>DEIN TRUPP</span><span class="live-tag"><i></i> BEREIT</span></div>
+          <article class="unit-card cowboy-card">
+            <div class="unit-avatar cowboy-avatar"><span>♟</span><b>CLAY</b></div>
+            <div class="unit-info"><div class="unit-name">Clay Mercer <span class="unit-role">RANGER</span></div><div class="unit-subtitle">Zu alt zum Sterben.</div><div class="health-row"><span>LEBEN</span><div class="health-track"><i id="clayHealthBar"></i></div><b id="clayHealthText">6 / 6</b></div><div class="ammo-row"><span>✦</span><b id="ammoText">6</b> PATRONEN <span class="ammo-note" id="ammoNote">· NACHLADEN: 1 AP</span></div></div>
+          </article>
+          <div class="squad-divider"><span>SEINE BESTEN FREUNDE</span><i></i></div>
+          <article class="unit-card dog-card">
+            <div class="unit-avatar dog-avatar dog-avatar-one"><span>●</span></div><div class="unit-info"><div class="unit-name">Ranger <span class="unit-role dog-role">FÄHRTE</span></div><div class="dog-desc">Spürt &amp; hetzt Untote.</div><div class="dog-status"><span class="status-pip"></span><span id="rangerStatus">Bei dir</span><span class="dog-loyalty">♥ UNERSCHÜTTERLICH</span></div></div>
+          </article>
+          <article class="unit-card dog-card">
+            <div class="unit-avatar dog-avatar dog-avatar-two"><span>●</span></div><div class="unit-info"><div class="unit-name">Belle <span class="unit-role dog-role">WÄCHTERIN</span></div><div class="dog-desc">Beschützt Clay in der Nähe.</div><div class="dog-status"><span class="status-pip"></span><span id="belleStatus">Bei dir</span><span class="dog-loyalty">♥ UNERSCHÜTTERLICH</span></div></div>
+          </article>
+        </section>
+
+        <section class="intel-panel panel">
+          <div class="panel-title"><span>NACHTBERICHT</span><span class="report-icon">⌁</span></div>
+          <div class="threat-line"><div class="threat-icon">☠</div><div><span>UNTOTE IN SICHT</span><b id="zombieCount">0</b></div><div class="threat-meter" id="threatMeter"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="intel-divider"></div>
+          <div class="recent-log" id="battleLog" aria-live="polite"><div class="log-entry"><span class="log-time">JETZT</span><span>Die Stille vor dem Sturm …</span></div></div>
+          <div class="log-bottom"><span class="log-dot"></span> FUNKVERBINDUNG STABIL</div>
+        </section>
+
+        <section class="controls-panel panel">
+          <div class="panel-title"><span>DEINE ZÜGE</span><span class="small-help">?</span></div>
+          <div class="control-row"><span class="keycap">KLICK</span><span>Feld bewegen / Ziel anvisieren</span></div>
+          <div class="control-row"><span class="keycap">WASD</span><span>Clay bewegen</span></div>
+          <div class="control-row"><span class="keycap">E</span><span>Runde beenden</span></div>
+          <div class="tip-box"><span>✦</span><p><b>TIPP VOM SHERIFF</b><br>Deine Hunde greifen Zombies automatisch an — bleib in ihrer Nähe.</p></div>
+        </section>
+        <div class="sidebar-foot"><span>✳</span> GEMEINSAM GEGEN DIE DUNKELHEIT</div>
+      </aside>
+    </section>
+    <footer class="site-footer"><span>DUST &amp; BONES <i>—</i> EINE GRENZGESCHICHTE</span><span>ÜBERLEBE DIE NACHT. SCHÜTZE DEIN ZUHAUSE.</span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
