@@ -34,7 +34,7 @@
             <div class="intro-card">
               <div class="intro-mark">✳</div><div class="eyebrow">EINE GRENZSTADT. EIN LETZTER ABEND.</div>
               <h2>Wenn die Glocke<br>dreimal schlägt …</h2>
-              <p>… kommen die Toten. Halte mit Clay und seinen Schäferhunden Red Creek Nacht für Nacht. Jede überstandene Welle macht euch stärker.</p>
+              <p>… kommen die Toten. Halte mit Rick und seinen Schäferhunden Red Creek Nacht für Nacht. Jede überstandene Welle macht euch stärker.</p>
               <button class="primary-button" id="startButton">SATTEL AUF <span>→</span></button>
               <div class="intro-hint">RUNDENBASIERTE TAKTIK · KEIN ENTKOMMEN</div>
             </div>
@@ -52,7 +52,7 @@
         </div>
         <div class="battle-footer">
           <div class="objective"><span class="objective-icon">◎</span><div><b>HALTE DIE STADT</b><span id="objectiveText">Räume die Untoten aus Red Creek.</span></div></div>
-          <div class="turn-actions"><span class="ap-label">AKTIONEN <b id="apCount">2</b></span><button class="end-turn-button" id="endTurnButton">RUNDE BEENDEN <span>↗</span></button></div>
+          <div class="turn-actions"><span class="ap-label">AKTIONEN <b id="apCount">2</b></span><button class="reload-button" id="reloadButton" type="button" aria-label="Revolver nachladen">↻ <span>NACHLADEN</span></button><button class="end-turn-button" id="endTurnButton">RUNDE BEENDEN <span>↗</span></button></div>
         </div>
       </section>
 
@@ -60,15 +60,15 @@
         <section class="squad-panel panel">
           <div class="panel-title"><span>DEIN TRUPP</span><span class="live-tag"><i></i> BEREIT</span></div>
           <article class="unit-card cowboy-card">
-            <div class="unit-avatar cowboy-avatar"><span>♟</span><b>CLAY</b></div>
-            <div class="unit-info"><div class="unit-name">Clay Mercer <span class="unit-role">RANGER</span></div><div class="unit-subtitle">Zu alt zum Sterben.</div><div class="health-row"><span>LEBEN</span><div class="health-track"><i id="clayHealthBar"></i></div><b id="clayHealthText">6 / 6</b></div><div class="ammo-row"><span>✦</span><b id="ammoText">6</b> PATRONEN <span class="ammo-note" id="ammoNote">· NACHLADEN: 1 AP</span></div></div>
+            <div class="unit-avatar cowboy-avatar"><span>♟</span><b>RICK</b></div>
+            <div class="unit-info"><div class="unit-name">Rick Mercer <span class="unit-role">COWBOY</span></div><div class="unit-subtitle">Zu alt zum Sterben.</div><div class="health-row"><span>LEBEN</span><div class="health-track"><i id="rickHealthBar"></i></div><b id="rickHealthText">6 / 6</b></div><div class="ammo-row"><span>✦</span><b id="ammoText">6</b> PATRONEN <span class="ammo-note" id="ammoNote">· NACHLADEN: 1 AP</span></div></div>
           </article>
           <div class="squad-divider"><span>SEINE BESTEN FREUNDE</span><i></i></div>
           <article class="unit-card dog-card">
-            <div class="unit-avatar dog-avatar dog-avatar-one"><span>●</span></div><div class="unit-info"><div class="unit-name">Ranger <span class="unit-role dog-role">FÄHRTE</span></div><div class="dog-desc">Spürt &amp; hetzt Untote.</div><div class="dog-status"><span class="status-pip"></span><span id="rangerStatus">Bei dir</span><span class="dog-loyalty">♥ UNERSCHÜTTERLICH</span></div></div>
+            <div class="unit-avatar dog-avatar dog-avatar-one"><span>●</span></div><div class="unit-info"><div class="unit-name">Safi <span class="unit-role dog-role">FÄHRTE</span></div><div class="dog-desc">Spürt &amp; hetzt Untote.</div><div class="dog-status"><span class="status-pip"></span><span id="safiStatus">Bei dir</span><span class="dog-loyalty">♥ UNERSCHÜTTERLICH</span></div></div>
           </article>
           <article class="unit-card dog-card">
-            <div class="unit-avatar dog-avatar dog-avatar-two"><span>●</span></div><div class="unit-info"><div class="unit-name">Belle <span class="unit-role dog-role">WÄCHTERIN</span></div><div class="dog-desc">Beschützt Clay in der Nähe.</div><div class="dog-status"><span class="status-pip"></span><span id="belleStatus">Bei dir</span><span class="dog-loyalty">♥ UNERSCHÜTTERLICH</span></div></div>
+            <div class="unit-avatar dog-avatar dog-avatar-two"><span>●</span></div><div class="unit-info"><div class="unit-name">Lou <span class="unit-role dog-role">WÄCHTER</span></div><div class="dog-desc">Beschützt Rick in der Nähe.</div><div class="dog-status"><span class="status-pip"></span><span id="louStatus">Bei dir</span><span class="dog-loyalty">♥ UNERSCHÜTTERLICH</span></div></div>
           </article>
         </section>
 
@@ -82,8 +82,9 @@
 
         <section class="controls-panel panel">
           <div class="panel-title"><span>DEINE ZÜGE</span><span class="small-help">?</span></div>
+          <div class="touch-control-guide">Tippe auf ein leuchtendes Feld zum Bewegen oder auf einen Untoten zum Schießen.</div>
           <div class="control-row"><span class="keycap">KLICK</span><span>Feld bewegen / Ziel anvisieren</span></div>
-          <div class="control-row"><span class="keycap">WASD</span><span>Clay bewegen</span></div>
+          <div class="control-row"><span class="keycap">WASD</span><span>Rick bewegen</span></div>
           <div class="control-row"><span class="keycap">E</span><span>Runde beenden</span></div>
           <div class="tip-box"><span>✦</span><p><b>TIPP VOM SHERIFF</b><br>Deine Hunde greifen Zombies automatisch an — bleib in ihrer Nähe.</p></div>
         </section>
