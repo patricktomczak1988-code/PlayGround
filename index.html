@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#080c0a">
+<meta name="description" content="Garath: Toter Wald — Top-Down Zombie-Survival mit Rick, Lou und Safi.">
+<link rel="icon" href="data:,">
+<title>GARATH · TOTER WALD</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <canvas id="game" aria-label="Spielwelt"></canvas>
+  <div id="grain"></div>
+  <div id="vignette"></div>
+
+  <!-- ===================== HUD ===================== -->
+  <div id="hud" class="hidden">
+    <div class="hud-top-left">
+      <div class="char-card" id="rick-card">
+        <div class="portrait rick"><span>R</span></div>
+        <div class="char-main">
+          <div class="char-line">
+            <span class="char-name">RICK TOMCZAK</span>
+            <span class="char-level" id="rick-level">LV 1</span>
+          </div>
+          <div class="bar hp"><i id="rick-hp-fill"></i><b id="rick-hp-text">100 / 100</b></div>
+          <div class="bar xp"><i id="rick-xp-fill"></i></div>
+          <div class="char-status">
+            <span id="rick-armor" class="armor hidden">◈ 0</span>
+            <span id="buff-dmg" class="buff hidden">DMG ×2</span>
+            <span id="buff-spd" class="buff hidden">TEMPO</span>
+          </div>
+        </div>
+      </div>
+      <div class="dog-row">
+        <div class="dog-card" id="dog-card-lou">
+          <div class="portrait dog lou"><span>L</span></div>
+          <div class="dog-main">
+            <div class="char-line"><span class="char-name">LOU</span><span class="char-level" id="lou-level">LV 1</span></div>
+            <div class="bar doghp"><i id="lou-hp-fill"></i></div>
+            <div class="dog-state" id="lou-state">WACH</div>
+          </div>
+        </div>
+        <div class="dog-card" id="dog-card-safi">
+          <div class="portrait dog safi"><span>S</span></div>
+          <div class="dog-main">
+            <div class="char-line"><span class="char-name">SAFI</span><span class="char-level" id="safi-level">LV 1</span></div>
+            <div class="bar doghp"><i id="safi-hp-fill"></i></div>
+            <div class="dog-state" id="safi-state">WACH</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hud-top-right">
+      <div class="wave-panel">
+        <div class="wave-label">WELLE</div>
+        <div class="wave-num" id="wave-num">1</div>
+        <div class="wave-sub"><span id="wave-enemies">0 GEGNER</span><span id="wave-timer">00:00</span></div>
+        <div class="wave-score">PUNKTE <b id="score">0</b></div>
+      </div>
+      <div class="minimap-wrap">
+        <canvas id="minimap" width="240" height="190"></canvas>
+        <div class="minimap-label">GARATH</div>
+      </div>
+    </div>
+
+    <div class="hud-bottom-left">
+      <div class="ability" id="dash-ability">
+        <div class="ability-ring"><b>⇢</b><i id="dash-fill"></i></div>
+        <span>DASH</span>
+      </div>
+      <div class="ability reload-ability" id="reload-hint">
+        <div class="ability-ring"><b>R</b></div>
+        <span>NACHLADEN</span>
+      </div>
+    </div>
+
+    <div class="hud-bottom-center">
+      <div class="weapon-hud">
+        <div class="weapon-name" id="weapon-name">RICK'S KARABINER</div>
+        <div class="weapon-ammo"><b id="ammo-mag">14</b><span id="ammo-reserve">/ ∞</span></div>
+        <div class="weapon-slots">
+          <span class="slot active" data-slot="1">1 · PISTOLE</span>
+          <span class="slot" data-slot="2">2 · SCHROT</span>
+          <span class="slot" data-slot="3">3 · MP</span>
+          <span class="slot" data-slot="4">4 · GEWEHR</span>
+        </div>
+        <div class="reload-bar hidden" id="reload-bar"><i id="reload-fill"></i></div>
+      </div>
+    </div>
+
+    <div id="prompt" class="prompt hidden"><kbd>E</kbd><span id="prompt-text"></span></div>
+    <div id="wave-banner" class="wave-banner"><small id="banner-small">GARATHER WALD</small><b id="banner-big">WELLE 1</b></div>
+    <div id="toasts"></div>
+    <div id="boss-bar" class="boss-bar hidden"><span>DER KOLOSS VON GARATH</span><div class="bar bosshp"><i id="boss-fill"></i></div></div>
+    <div class="hud-hint">WASD BEWEGEN · MAUS ZIELEN · KLICK FEUERN · SHIFT DASH</div>
+  </div>
+
+  <!-- ===================== TITLE ===================== -->
+  <div id="title-screen" class="screen">
+    <div class="title-top">
+      <div class="kicker">DÜSSELDORF · GARATH · 22:47 UHR</div>
+      <h1 class="logo">GARATH<span>TOTER WALD</span></h1>
+      <p class="tagline">Die Stadt ist gefallen. Deine Hunde sind geblieben.</p>
+    </div>
+    <div class="title-menu">
+      <button id="btn-play" class="big-btn" aria-label="Play now"><span>SPIEL STARTEN</span><small>ÜBERLEBE DIE NACHT</small></button>
+      <div class="title-options">
+        <button id="btn-controls" class="ghost-btn" type="button">STEUERUNG</button>
+        <button id="btn-sound" class="ghost-btn" type="button">SOUND: AN</button>
+      </div>
+      <div class="crew">
+        <div class="crew-member"><i class="dot rick"></i><span>RICK</span><small>Schütze</small></div>
+        <div class="crew-member"><i class="dot lou"></i><span>LOU</span><small>Schäferhund</small></div>
+        <div class="crew-member"><i class="dot safi"></i><span>SAFI</span><small>Schäferhund</small></div>
+      </div>
+    </div>
+    <div class="title-foot">
+      <span>BESTE WELLE <b id="best-wave">1</b></span>
+      <span>BESTE PUNKTE <b id="best-score">0</b></span>
+      <span class="desktop-only">KOPFHÖRER EMPFOHLEN</span>
+    </div>
+  </div>
+
+  <div id="controls-screen" class="screen hidden">
+    <div class="panel controls-panel">
+      <h2>STEUERUNG</h2>
+      <div class="controls-grid">
+        <div><kbd>W A S D</kbd><span>Bewegen</span></div>
+        <div><kbd>MAUS</kbd><span>Zielen</span></div>
+        <div><kbd>LINKSKLICK</kbd><span>Feuern</span></div>
+        <div><kbd>SHIFT</kbd><span>Ausweichrolle</span></div>
+        <div><kbd>R</kbd><span>Nachladen</span></div>
+        <div><kbd>E</kbd><span>Kiste / Hund</span></div>
+        <div><kbd>1 – 4</kbd><span>Waffe wechseln</span></div>
+        <div><kbd>ESC</kbd><span>Pause</span></div>
+        <div><kbd>GAMEPAD</kbd><span>Sticks + RT</span></div>
+        <div><kbd>TOUCH</kbd><span>Zwei Sticks, Auto-Feuer</span></div>
+      </div>
+      <p class="panel-note">Power-Ups heilen, verstärken oder schützen dich und dein Rudel. Jede Stufe lässt dich eine Verbesserung wählen — auch für Lou und Safi.</p>
+      <button id="btn-controls-back" class="big-btn small" type="button">ZURÜCK</button>
+    </div>
+  </div>
+
+  <!-- ===================== LEVEL UP ===================== -->
+  <div id="levelup-screen" class="screen hidden">
+    <div class="levelup-head">
+      <div class="kicker">ERFAHRUNG GESAMMELT</div>
+      <h2>STUFE <b id="levelup-level">2</b></h2>
+      <p>Wähle eine Verbesserung für dein Rudel.</p>
+    </div>
+    <div id="cards" class="cards"></div>
+    <div class="levelup-hint">1 · 2 · 3 ODER KLICKEN</div>
+  </div>
+
+  <!-- ===================== PAUSE ===================== -->
+  <div id="pause-screen" class="screen hidden">
+    <div class="panel pause-panel">
+      <div class="kicker">GARATHER WALD</div>
+      <h2>PAUSE</h2>
+      <div class="pause-stats">
+        <div><span>WELLE</span><b id="pause-wave">1</b></div>
+        <div><span>PUNKTE</span><b id="pause-score">0</b></div>
+        <div><span>KILLS</span><b id="pause-kills">0</b></div>
+        <div><span>ZEIT</span><b id="pause-time">00:00</b></div>
+      </div>
+      <button id="btn-resume" class="big-btn small" type="button">WEITER</button>
+      <button id="btn-pause-controls" class="ghost-btn" type="button">STEUERUNG</button>
+      <button id="btn-pause-restart" class="ghost-btn danger" type="button">NEU STARTEN</button>
+      <button id="btn-pause-mute" class="ghost-btn" type="button">SOUND: AN</button>
+    </div>
+  </div>
+
+  <!-- ===================== GAME OVER ===================== -->
+  <div id="gameover-screen" class="screen hidden">
+    <div class="go-wrap">
+      <div class="kicker danger">DAS RUDEL IST GEFALLEN</div>
+      <h2 class="go-title">GARATH<span>HAT EUCH</span></h2>
+      <div class="go-stats">
+        <div><b id="go-wave">1</b><span>WELLE</span></div>
+        <div><b id="go-kills">0</b><span>KILLS</span></div>
+        <div><b id="go-score">0</b><span>PUNKTE</span></div>
+        <div><b id="go-time">00:00</b><span>ÜBERLEBT</span></div>
+      </div>
+      <div class="go-record hidden" id="go-record">NEUER REKORD</div>
+      <button id="btn-restart" class="big-btn" aria-label="Play again"><span>NOCHMAL VERSUCHEN</span><small>DAS RUDEL STEHT WIEDER AUF</small></button>
+      <button id="btn-menu" class="ghost-btn" type="button">HAUPTMENÜ</button>
+    </div>
+  </div>
+
+  <!-- ===================== TOUCH ===================== -->
+  <div id="touch-ui" class="hidden">
+    <div id="stick-move" class="stick"><div class="stick-knob"></div><span>BEWEGEN</span></div>
+    <div id="stick-aim" class="stick"><div class="stick-knob"></div><span>ZIELEN / FEUER</span></div>
+    <div class="touch-actions">
+      <button id="touch-dash" class="touch-btn" type="button">⇢<small>DASH</small></button>
+      <button id="touch-reload" class="touch-btn" type="button">⟳<small>MUNI</small></button>
+      <button id="touch-use" class="touch-btn accent" type="button">E<small>AKTION</small></button>
+    </div>
+  </div>
+
+  <div id="rotate-hint" class="hidden">Für ein besseres Spielgefühl: Gerät quer halten.</div>
+  <div id="loading" class="screen"><div class="loader-logo">GARATH</div><div class="loader-line"><i></i></div></div>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
